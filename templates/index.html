@@ -1,0 +1,26 @@
+
+<head>
+    <title>Video Streaming </title>
+</head>
+<body>
+
+    <div width="640px" height="480px" style="display:inline-block">
+        <img id="img" src="{{ url_for('video_feed') }}">
+    </div>
+
+<script >
+
+    var ctx = document.getElementById("canvas").getContext('2d');
+    var img = new Image();
+    img.src = "{{ url_for('video_feed') }}";
+
+
+    function refreshCanvas(){
+        ctx.drawImage(img, 0, 0);
+    };
+    window.setInterval("refreshCanvas()", 50);
+
+</script>
+
+</body>
+</html>

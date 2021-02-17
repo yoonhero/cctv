@@ -1,6 +1,6 @@
 import json
 import requests
-KAKAO_TOKEN = "q5BQ4c4yllEjuQX8Lc0Nw6aIHIbO4phB_8ycZgorDNQAAAF3qrHYfw"
+KAKAO_TOKEN = ""
 url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
 
 # 사용자 토큰

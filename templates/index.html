@@ -1,26 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Video Streaming </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma-rtl.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #img {
+            width: 80%;
+            height: auto;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .control {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .notification {
+            width: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            height: 30%;
+            text-align: center;
+            z-index: 11;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        .stop {
+            top: 20%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .main {
+            width: 100vw;
+        }
+        
+        .blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.568);
+            z-index: 10;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .notification {
+            border-radius: 20px;
+        }
+        
+        @media screen and (max-width:580px) {
+            #img {
+                width: 100%;
+            }
+            .notification {
+                width: 80%;
+            }
+        }
+    </style>
 </head>
-<body>
 
-    <div width="640px" height="480px" style="display:inline-block">
+<body>
+    <div class="main">
         <img id="img" src="{{ url_for('video_feed') }}">
+        <div class="stop hide">
+            <button class="button is-primary is-large">stop video</button>
+
+        </div>
+        <div class="control">
+            <button class="button is-primary is-large"><</button>
+            <button class="button is-primary is-large">></button>
+        </div>
+
+
+    </div>
+    <div class="blur"></div>
+    <div class="notification is-success">
+
+        <button class="delete" onclick="hide()"></button>
+        <h2>CCTV 프로그램</h2>
+        <h3>python opencv로 만들어진 사람 탐지 cctv프로그램입니다. </h3>
+        <br />
+        <br />
+        <a href="https://github.com/yoonhero/cctv">Source Code</a>
     </div>
 
-<script >
+    <script>
+        //is-loading
+        var ctx = document.getElementById("canvas").getContext('2d');
+        var img = new Image();
+        img.src = "{{ url_for('video_feed') }}";
 
-    var ctx = document.getElementById("canvas").getContext('2d');
-    var img = new Image();
-    img.src = "{{ url_for('video_feed') }}";
 
+        function refreshCanvas() {
+            ctx.drawImage(img, 0, 0);
+        };
 
-    function refreshCanvas(){
-        ctx.drawImage(img, 0, 0);
-    };
-    window.setInterval("refreshCanvas()", 50);
-
-</script>
+        function hide() {
+            document.querySelector(".blur").classList.add("hide");
+            document.querySelector(".notification").classList.add("hide");
+        }
+        window.setInterval("refreshCanvas()", 50);
+    </script>
 
 </body>
+
 </html>
